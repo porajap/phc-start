@@ -57,10 +57,7 @@ require 'connect.php';
       $_SESSION["ItemCode"] = $_POST["ItemCode"];
       $_SESSION["xDetail"] = $_POST["xDetail"];
      
-      echo "<script>
-			window.location.href = 'Dispenser_DocNo.php?add=1&sel=0';
-			</script>
-			";
+      echo "<script>window.location.href = 'Dispenser_DocNo.php?add=1&sel=0&Cus_Code=".$_SESSION["Cus_Code"]."';</script>";
       }
     ?>
 
