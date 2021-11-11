@@ -274,6 +274,10 @@ require 'connect.php';
                         <label class="form-check-label" for="Radiotax1">แนบภาษี</label>
                     </div>
                     <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="Radiotax" id="Radiotax3" value="3" onclick="chkRadio_Tax();">
+                        <label class="form-check-label" for="Radiotax3">ขาดภาษี</label>
+                    </div>
+                    <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="Radiotax" id="Radiotax2" value="2" onclick="chkRadio_Tax();">
                         <label class="form-check-label" for="Radiotax2">ไม่แนบภาษี</label>
                     </div>
@@ -419,10 +423,15 @@ require 'connect.php';
             $("#div_imageTax").show();
     
             $("#div_Text_totaltax").show(); 
-        }else{
+        }else if(Radiotax==2){
             $("#div_imageTax").hide();
           
             $("#div_Text_totaltax").hide();
+        }
+        else if(Radiotax==3){
+            $("#div_imageTax").hide();
+          
+          $("#div_Text_totaltax").show();
         }
   }
 
