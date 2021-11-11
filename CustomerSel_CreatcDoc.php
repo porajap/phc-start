@@ -191,7 +191,7 @@ require 'connect.php';
                 </div>
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="Radiopay" id="Radiopay2" value="2" onclick="chkRadiopay();">
-                    <label class="form-check-label" for="Radiopay2">เงินโอนน</label>
+                    <label class="form-check-label" for="Radiopay2">เงินโอน</label>
                 </div>
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="Radiopay" id="Radiopay3" value="3" onclick="chkRadiopay();">
