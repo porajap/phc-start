@@ -20,6 +20,8 @@ if( $_REQUEST["add"]== 0){
 if($_REQUEST["Cus_Code"] != "" ){
 	$CusCode = $_REQUEST["Cus_Code"];
 	$_SESSION["Cus_Code"] = $CusCode;
+}else{
+	$_REQUEST["Cus_Code"] =$_SESSION["Cus_Code"];
 }
 
 	$Area = $_SESSION["Area"];
