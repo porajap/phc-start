@@ -459,10 +459,12 @@ require 'connect.php';
     var _sumTotal = parseFloat(0);
     if(Radio_Sum=='1'){
         _sumTotal = $('#text_sum').val();
-        _sumTotal =parseFloat(_sumTotal.replace(/,/g, ''));
     }else{
         _sumTotal = $('#text_sum_tax').val();
-        _sumTotal = parseFloat(_sumTotal.replace(/,/g, ''));
+    }
+
+    if(_sumTotal){
+        _sumTotal =parseFloat(_sumTotal.replace(/,/g, ''));
     }
     const _resultSumTotal = parseFloat(_sumTotal*0.01).toFixed(2);
     $('#Text_totaltax').val(_resultSumTotal);
@@ -846,7 +848,7 @@ require 'connect.php';
         $("#text_sum").val(Text_sumtotal);
         $("#Text_total").val(Text_sumtotal);
         $("#text_sum_tax").val(sumtotal_tax);
-        
+        chk_typeSum();
         // alert(sumtotal);
     }
     
