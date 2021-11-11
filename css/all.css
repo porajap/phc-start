@@ -1,0 +1,33 @@
+.xTop1 {
+    margin-top: 7px;
+    margin-left: 1px;
+    margin-right: 1px;
+}
+
+.xTb {
+    margin-top: 7px;
+    margin-left: 1px;
+    margin-right: 1px;
+    margin-bottom: 7px;
+}
+
+.label1 {
+    margin-left: 10px;
+    margin-top: 7px;
+}
+
+.label2 {
+    margin-left: 10px;
+    margin-top: 7px;
+    margin-bottom: 7px;
+}
+
+.xBoxWh {
+    width: 150px;
+}
+
+.ui-icon-custom:after {
+    background-image: url("../_assets/img/glyphish-icons/21-skull.png");
+    background-position: 3px 3px;
+    background-size: 70%;
+}
