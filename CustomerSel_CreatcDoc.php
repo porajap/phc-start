@@ -456,14 +456,16 @@ require 'connect.php';
 
   function chk_typeSum() {
     var Radio_Sum= document.querySelector('input[name="Radio_Sum"]:checked').value;  
-    var text_sum_tax = $('#text_sum_tax').val();
-    var text_sum = $('#text_sum').val();
-    
-        if(Radio_Sum=='1'){
-            $('#Text_totaltax').val(text_sum);
-        }else{
-            $('#Text_totaltax').val(text_sum_tax);
-        }
+    var _sumTotal = parseFloat(0);
+    if(Radio_Sum=='1'){
+        _sumTotal = $('#text_sum').val();
+        _sumTotal =parseFloat(_sumTotal.replace(/,/g, ''));
+    }else{
+        _sumTotal = $('#text_sum_tax').val();
+        _sumTotal = parseFloat(_sumTotal.replace(/,/g, ''));
+    }
+    const _resultSumTotal = parseFloat(_sumTotal*0.01).toFixed(2);
+    $('#Text_totaltax').val(_resultSumTotal);
   }
 
     function getBank() {
