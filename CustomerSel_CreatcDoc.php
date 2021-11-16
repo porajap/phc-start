@@ -1123,6 +1123,7 @@ require 'connect.php';
                 showConfirmButton: false,
                 timer: 2000,
               });
+              return;
         }
 
         form_data.append('FUNC_NAME', 'SaveDoc');
