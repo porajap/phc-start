@@ -101,7 +101,7 @@ session_start();
 		let getEndYear;
 		let getEndMonth;
 		let getEndDate;
-		const hourForHide = 15 //15.00
+		const hourForHide = 12 //12.00
 		const limitHour = 3 // 3 hours
 
 	
@@ -141,16 +141,13 @@ session_start();
 
 		function checkHideOrShowMenu(){
 
-			console.log("end date:", `${getEndYear} ${getEndMonth} ${getEndDate}`);
-			console.log("current date:", `${currentYear} ${currentMonth} ${currentDate}` );
-			console.log(`currentHour == limitHour : ${currentHour} >= ${hourForHide} : ${currentHour == hourForHide}`);
-
 			if(
 				getEndYear == currentYear && 
 				getEndMonth == currentMonth && 
 				getEndDate == currentDate && 
 				currentHour >= hourForHide &&
-				(currentHour - hourForHide) <= limitHour
+				(currentHour - hourForHide) <= limitHour &&
+				(currentHour - hourForHide) != limitHour
 			){
 				toggleMenu("none");
 			}else{
