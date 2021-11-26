@@ -57,7 +57,7 @@ session_start();
 					}else{ ?>
 						<a class="list-group-item list-group-item-action" href="Welfare.php"><img src='img/money01.png' width='40' height='40' /> บันทึกเบิกสวัสดิการ</a>
 						<a class="list-group-item list-group-item-action" href="PieChart.php"><img src='img/rsz_pie-chart.png' width='40' height='40' /> Chart</a>
-						<a class="list-group-item list-group-item-action" href="order.php">บันทึกขอซื้อ</a>
+						<a class="list-group-item list-group-item-action" href="order.php" id="menuHide">บันทึกขอซื้อ</a>
 						<a class="list-group-item list-group-item-action" href="CustomerSel.php?Menu=2"><img src='img/rsz_paybill.png' width='40' height='40' /> อับโหลดเช็ค</a> 
 						<a class="list-group-item list-group-item-action" href="Quotation.php">เสนอราคา</a>
 						<a class="list-group-item list-group-item-action" href="Bring.php">ใบเบิกสินค้า</a>
@@ -87,6 +87,84 @@ session_start();
 			</div>
 		</div>
 	</div>
+
+	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+	<script>
+		checkEndDate();
+		const currentDateTime = new Date();
+		//current date time from client
+		let currentYear = currentDateTime.getFullYear();
+		let currentMonth = currentDateTime.getMonth() + 1;
+		let currentDate = currentDateTime.getDate();
+		let currentHour = currentDateTime.getHours()
+
+		//await data from database
+		let getEndYear;
+		let getEndMonth;
+		let getEndDate;
+		const hourForHide = 15 //15.00
+		const limitHour = 3 // 3 hours
+
+	
+		function checkEndDate(){
+
+			const url = "process/p2.php";
+			const data = {};
+			const other_params = {
+				headers : { "content-type" : "application/json; charset=UTF-8"},
+				body : data,
+				method : "POST",
+				mode : "cors"
+			};
+
+			fetch(url, other_params).then(function(response) {
+				if (response.ok) {
+					return response.json();
+				} else {
+					throw new Error("Could not reach the API: " + response.statusText);
+				}
+			}).then(function(data) {
+
+				getEndYear = data.Year;
+				getEndMonth = data.Month;
+				getEndYear = data.Year;
+
+				var _eDate = data.eDate;
+				if(_eDate != ""){
+					getEndDate = _eDate.split("-")[2].trim();
+				}
+
+				checkHideOrShowMenu();
+			}).catch(function(error) {
+				toggleMenu("block");
+			});
+		}
+
+
+		function checkHideOrShowMenu(){
+
+			console.log("end date:", `${getEndYear} ${getEndMonth} ${getEndDate}`);
+			console.log("current date:", `${currentYear} ${currentMonth} ${currentDate}` );
+			console.log(`currentHour == limitHour : ${currentHour} == ${limitHour} : ${currentHour == limitHour}`);
+
+			if(
+				getEndYear == currentYear && 
+				getEndMonth == currentMonth && 
+				getEndDate == currentDate && 
+				currentHour >= hourForHide &&
+				(currentHour - hourForHide) <= limitHour
+			){
+				toggleMenu("none");
+			}else{
+				toggleMenu("block");
+			}
+		}
+
+		function toggleMenu(style){
+			var _menu = document.getElementById('menuHide');
+				_menu.style.display  = style
+		}
+	</script>
 </body>
 
 </html>
