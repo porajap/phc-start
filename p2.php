@@ -107,16 +107,16 @@ session_start();
 	
 		function checkEndDate(){
 
-			const url = "process/p2.php";
-			const data = {};
-			const other_params = {
+			const _url = "process/p2.php";
+			const _data = {};
+			const _other_params = {
 				headers : { "content-type" : "application/json; charset=UTF-8"},
-				body : data,
+				body : _data,
 				method : "POST",
 				mode : "cors"
 			};
 
-			fetch(url, other_params).then(function(response) {
+			fetch(_url, _other_params).then(function(response) {
 				if (response.ok) {
 					return response.json();
 				} else {
