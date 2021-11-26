@@ -146,7 +146,7 @@ session_start();
 				getEndMonth == currentMonth && 
 				getEndDate == currentDate && 
 				currentHour >= hourForHide &&
-				(currentHour - hourForHide) <= limitHour &&
+				(currentHour - hourForHide) < limitHour &&
 				(currentHour - hourForHide) != limitHour
 			){
 				toggleMenu("none");
