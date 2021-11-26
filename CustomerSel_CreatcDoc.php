@@ -1112,6 +1112,7 @@ require 'connect.php';
                 showConfirmButton: false,
                 timer: 2000,
               });
+              return;
         }
 
 
