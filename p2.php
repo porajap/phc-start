@@ -124,7 +124,6 @@ session_start();
 				}
 			}).then(function(data) {
 
-				getEndYear = data.Year;
 				getEndMonth = data.Month;
 				getEndYear = data.Year;
 
