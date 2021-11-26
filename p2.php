@@ -144,7 +144,7 @@ session_start();
 
 			console.log("end date:", `${getEndYear} ${getEndMonth} ${getEndDate}`);
 			console.log("current date:", `${currentYear} ${currentMonth} ${currentDate}` );
-			console.log(`currentHour == limitHour : ${currentHour} == ${limitHour} : ${currentHour == limitHour}`);
+			console.log(`currentHour == limitHour : ${currentHour} >= ${hourForHide} : ${currentHour == hourForHide}`);
 
 			if(
 				getEndYear == currentYear && 
