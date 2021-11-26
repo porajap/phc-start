@@ -92,10 +92,10 @@ session_start();
 		checkEndDate();
 		const currentDateTime = new Date();
 		//current date time from client
-		let currentYear = currentDateTime.getFullYear();
-		let currentMonth = currentDateTime.getMonth() + 1;
-		let currentDate = currentDateTime.getDate();
-		let currentHour = currentDateTime.getHours()
+		const currentYear = currentDateTime.getFullYear();
+		const currentMonth = currentDateTime.getMonth() + 1;
+		const currentDate = currentDateTime.getDate();
+		const currentHour = currentDateTime.getHours()
 
 		//await data from database
 		let getEndYear;
