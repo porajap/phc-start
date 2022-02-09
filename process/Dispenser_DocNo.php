@@ -20,6 +20,7 @@
     $Sql = "SELECT id,ssName,ssLocation,ssAddress1,ssAddress2 FROM br_dispenser_address WHERE AreaCode = '$AreaCode' AND CusCode = '$CusCode' ORDER BY id DESC";
     // $xSql = str_replace("'","",$Sql);
     // mysqli_query($conn, "INSERT INTO log (log) VALUES ('$xSql')");
+  
     $meQuery = mysqli_query($conn, $Sql);
     while ($Result = mysqli_fetch_assoc($meQuery)) {
       $return[$count]['id'] = $Result['id'];
@@ -43,6 +44,7 @@
     $count = 0;
     $Sql = "SELECT id,ssName,ssLocation,ssAddress1,ssAddress2 FROM br_dispenser_address WHERE id = $id";
     // mysqli_query($conn, "INSERT INTO log (log) VALUES ('$Sql')");
+
     $meQuery = mysqli_query($conn, $Sql);
     while ($Result = mysqli_fetch_assoc($meQuery)) {
       $return[$count]['id'] = $Result['id'];

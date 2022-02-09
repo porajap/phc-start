@@ -65,7 +65,6 @@ if($_REQUEST["Cus_Code"] != "" ){
 			$Sql4 .= "FROM br_dispenser ";
 			$Sql4 .= "INNER JOIN customer ON br_dispenser.Cus_Code = customer.Cus_Code ";
 			$Sql4 .= "WHERE DocNo = '$DocNo' AND br_dispenser.IsCancel = 0";
-			
 			$meQuery = mysqli_query($conn,$Sql4);
 			while ($Result = mysqli_fetch_assoc($meQuery))
 			{
@@ -133,6 +132,7 @@ if($_REQUEST["Cus_Code"] != "" ){
 			$VL[0]="0,ทดลองใช้";
 			$VL[1]="2,คืน/เปลี่ยน";
 			$VL[2]="3,ติดตั้งใหม่";
+
 ?>
 
 
@@ -272,7 +272,8 @@ if($_REQUEST["Cus_Code"] != "" ){
 						<div class="input-group mb-1">
 							<span class="input-group-text xBoxWh">ที่อยู่ในการจัดส่ง</span>
 							<select name="ssAddress" id="ssAddress"  onchange="getAddress(this.value);" class="form-select" aria-label="Default select example">
-												<?php 
+												<!-- <?php 
+
 													for($i=0;$i<4;$i++){
 														if($VL[$i] == $IsQT ){
 												?>
@@ -282,7 +283,7 @@ if($_REQUEST["Cus_Code"] != "" ){
 											    <?php
 														}
 													}
-												?>
+												?> -->
                             </select> 
 						</div>
 						<div class="input-group mb-3">
@@ -374,18 +375,30 @@ if($_REQUEST["Cus_Code"] != "" ){
 							// alert(len + " :: " + (Object.keys(temp).length-2));
 							Str2 = "";
 							for (var i = 0; i < len; i++) {
-								if(i == 0){
-									Str2 += "<option selected value="+temp[i]['id']+">"+temp[i]['ssName']+"</option>";
+
+								if(<?=$_SESSION["Cus_Code"]?> === undefined || <?=$_SESSION["Cus_Code"]?> === ""){
+									if(temp[i]['ssName'] === ""){
+										Str2 += "<option selected value="+temp[i]['id']+">"+temp[i]['ssName']+"</option>";
+										getAddress(temp[i]['id']);
+									}else{
+										Str2 += "<option value="+temp[i]['id']+">"+temp[i]['ssName']+"</option>";
+									}
 								}else{
-									Str2 += "<option value="+temp[i]['id']+">"+temp[i]['ssName']+"</option>";
+									if('<?=$ssName?>' === temp[i]['ssName']){
+										Str2 += "<option selected value="+temp[i]['id']+">"+temp[i]['ssName']+"</option>";
+										getAddress(temp[i]['id']);
+									}else{
+										Str2 += "<option value="+temp[i]['id']+">"+temp[i]['ssName']+"</option>";
+									}
 								}
+							
 							}
 							$("#ssAddress").append(Str2);
-							getAddress(temp[0]['id']);
 						}else if ((temp["form"]=='getAddress')) {
+							console.log(temp[0]);
 							$("#ssName").val( temp[0]['ssName'] );
 							$("#ssLocation").val( temp[0]['ssLocation'] );
-							$("#ssAddress1").val( temp[0]['ssAddress1'] );
+							$("#ssAddress1").val('<?=$ssAddress1?>' == "" ?  temp[0]['ssAddress1'] : '<?=$ssAddress1?>' );
 							$("#ssAddress2").val( temp[0]['ssAddress2'] );
 						}
 					}

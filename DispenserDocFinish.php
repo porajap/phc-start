@@ -19,6 +19,7 @@ $Sql = "UPDATE br_dispenser SET ";
 $Sql .= "IsSave=1,IsPO='$xPO',IsQT='$IsQT',IsBV='$IsBV',tDate='$tDate',IsST='$IsST',Detail='$xDetail',";
 $Sql .= "ssName='$ssName',ssLocation='$ssLocation',ssAddress1='$ssAddress1',ssAddress2='$ssAddress2' ";
 $Sql .= "WHERE DocNo = '$xDocNo'";
+
 $meQuery = mysqli_query($conn,$Sql);
 $Cnt = 0;
 if( $meQuery ){
