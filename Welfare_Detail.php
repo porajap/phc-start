@@ -12,6 +12,7 @@ require 'connect.php';
     $xIsCopy     = $_REQUEST["IsCopy"];
 	$xPrice     = $_REQUEST["Price"];
     $CheckT     = $_REQUEST["CheckT"];
+    
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -41,6 +42,10 @@ require 'connect.php';
 			background-color: #CCD4DB;
 			font-weight: 900;
 		}
+
+        .font-style {
+            margin-top: 10px;
+        }
     </style>
 </head>
 
@@ -68,16 +73,18 @@ require 'connect.php';
 		    $sumTotal = 0;
 
             if($xIsCopy ==0){
-                $Sql = "SELECT item.NameTH,sale_detail.Qty_tmp,sale_detail.Price_tmp,sale_detail.Total_tmp
+                $Sql = "SELECT item.NameTH,item.IsDispenser,sale_detail.Qty_tmp,sale_detail.Price_tmp,sale_detail.Total_tmp
 					FROM sale_detail
 					INNER JOIN item ON sale_detail.Item_Code = item.Item_Code
 					WHERE sale_detail.DocNo = '$xDocNo'
+                    AND item.IsDispenser != '1'
 					ORDER BY item.NameTH ASC";
             }else{
-                $Sql = "SELECT item.NameTH,sale_x_detail.Qty_tmp,sale_x_detail.Price_tmp,sale_x_detail.Total_tmp
+                $Sql = "SELECT item.NameTH,item.IsDispenser,sale_x_detail.Qty_tmp,sale_x_detail.Price_tmp,sale_x_detail.Total_tmp
 					FROM sale_x_detail
 					INNER JOIN item ON sale_x_detail.Item_Code = item.Item_Code
 					WHERE sale_x_detail.DocNo = '$xDocNo'
+                    AND item.IsDispenser != '1'
 					ORDER BY item.NameTH ASC";
             }
 
@@ -120,7 +127,69 @@ require 'connect.php';
 			<button type="submit" onclick="SaveData()" class="btn btn-primary">บันทึก</button>
 		</div>
 	</div>
+    <?php
+		    
+        if($Area == 'BB1'|| $Area == 'BB2'|| $Area == 'BB3'|| $Area == 'BB4'|| $Area == 'BB5'){
+    ?>
+                <span class="border-bottom border-danger"></span>
+        <div class="d-flex justify-content-center">
+            <h4 class="font-weight-bold text-danger font-style">รายการ Dispenser</h4>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                <th scope="col">รายการ</th>
+                <th scope="col">จำนวน</th>
+                <th scope="col">ราคา</th>
+                <th scope="col">เป็นเงิน</th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php
+                $sumTotal = 0;
 
+                if($xIsCopy ==0){
+                    $Sql = "SELECT item.NameTH,item.IsDispenser,sale_detail.Qty_tmp,sale_detail.Price_tmp,sale_detail.Total_tmp
+                        FROM sale_detail
+                        INNER JOIN item ON sale_detail.Item_Code = item.Item_Code
+                        WHERE sale_detail.DocNo = '$xDocNo' 
+                        AND item.IsDispenser = '1'
+                        ORDER BY item.NameTH ASC";
+                }else{
+                    $Sql = "SELECT item.NameTH,item.IsDispenser,sale_x_detail.Qty_tmp,sale_x_detail.Price_tmp,sale_x_detail.Total_tmp
+                        FROM sale_x_detail
+                        INNER JOIN item ON sale_x_detail.Item_Code = item.Item_Code
+                        WHERE sale_x_detail.DocNo = '$xDocNo'
+                        AND item.IsDispenser = '1'
+                        ORDER BY item.NameTH ASC";
+                }
+
+                
+                        $i=0;
+                        $meQuery = mysqli_query($conn, $Sql);
+                        while ($Result = mysqli_fetch_assoc($meQuery)) {
+                            echo "<tr> 
+                                    <td class='bd-left'> ".$Result["NameTH"] . " </td> 
+                                    <td class='bd-center'> ".number_format($Result["Qty_tmp"], 2, '.', ','). " </td> 
+                                    <td class='bd-right'> ". number_format($Result["Price_tmp"], 2, '.', ','). " </td>
+                                    <td class='bd-right'> ".number_format($Result["Total_tmp"], 2, '.', ','). " </td>
+                                </tr>";
+                                $sumTotal += $Result["Total_tmp"];
+                        }
+                        $sumTotal = sprintf("%.2f", $sumTotal)
+            ?>
+            </tbody>
+            <tfoot class="bkcolor">
+                <tr style="height: 35px"> 
+                    <td colspan="3">รวมเป็นเงินทั้งสิ้น</td>  
+                    <td class='bd-right'> <?= number_format($sumTotal, 2, '.', ',') ?> </td>
+                </tr>
+            </tfoot>
+        </table>
+    <?php
+		    
+        }
+    ?>
 </body>
 <script>
 

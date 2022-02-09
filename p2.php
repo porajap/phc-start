@@ -58,7 +58,7 @@ session_start();
 						<a class="list-group-item list-group-item-action" href="Welfare.php"><img src='img/money01.png' width='40' height='40' /> บันทึกเบิกสวัสดิการ</a>
 						<a class="list-group-item list-group-item-action" href="PieChart.php"><img src='img/rsz_pie-chart.png' width='40' height='40' /> Chart</a>
 						<a class="list-group-item list-group-item-action" href="order.php" id="menuHide">บันทึกขอซื้อ</a>
-						<a class="list-group-item list-group-item-action" href="CustomerSel.php?Menu=2"><img src='img/rsz_paybill.png' width='40' height='40' /> อับโหลดเช็ค</a> 
+						<a class="list-group-item list-group-item-action" href="CustomerSel.php?Menu=2"><img src='img/rsz_paybill.png' width='40' height='40' /> อัปโหลดเช็ค</a> 
 						<a class="list-group-item list-group-item-action" href="Quotation.php">เสนอราคา</a>
 						<a class="list-group-item list-group-item-action" href="Bring.php">ใบเบิกสินค้า</a>
 						<a class="list-group-item list-group-item-action" href="Dispenser.php"><img src='img/logo_0.png' width='40' height='40' /> ใบเบิกสินค้า ( Dispenser )</a>

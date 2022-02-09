@@ -170,9 +170,12 @@ require 'connect.php';
 						for (var i = 0; i < temp["rCnt"]; i++) {
                                   
 							        link="CustomerSel_DocDetail.php?Cus_Code="+temp[i]["Cus_Code"]+"&CusName="+temp[i]["CusName"];
+                                    if(temp["xMenu"] == 1){
+                                        link="ProductHidden.php?Cus_Code="+temp[i]["Cus_Code"];
+                                    }
 									// switch(temp["xMenu"]){
 									// 	case 1: link="ProductHidden.php?Cus_Code="+temp[i]["Cus_Code"];break;
-                                    //     case 2: link="UploadCheck.php?Cus_Code="+temp[i]["Cus_Code"];break;
+                                    //     case 2: link="CustomerSel_DocDetail.php?Cus_Code="+temp[i]["Cus_Code"];break;
 									// }
 
                                     Str += '<a class="list-group-item list-group-item-action" href="'+link+'">' +
