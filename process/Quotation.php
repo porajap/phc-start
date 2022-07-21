@@ -56,9 +56,9 @@
 		$Sql .= "INNER JOIN customer ON saleorder_sale.Cus_Code = customer.Cus_Code ";
 		$Sql .= "WHERE Area_Code = '$Area'  AND IsCancel = 0 AND ( DocNo LIKE '%$Search%' OR saleorder_sale.Cus_Code LIKE '%$Search%' OR customer.FName LIKE '%$Search%' ) ";
 		if($lenSearch > 0)
-			$Sql .= "ORDER BY DocNo DESC";
+			$Sql .= "ORDER BY ID DESC";
 		else	
-			$Sql .= "ORDER BY DocNo DESC LIMIT 100";
+			$Sql .= "ORDER BY ID DESC LIMIT 100";
 
 		$meQuery = mysqli_query($conn, $Sql);
 		while ($Result = mysqli_fetch_assoc($meQuery)) {

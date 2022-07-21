@@ -30,7 +30,8 @@ if($_REQUEST["Cus_Code"] != "" ){
 	$UnitCode = $_SESSION["UnitCode"];
 
 	if($DocNo == "" || $DocNo == null ){
-			$Sql1 = "SELECT COALESCE(MAX(CONVERT(SUBSTRING(DocNo,-4),UNSIGNED INTEGER)),0)+1 AS DocNo FROM saleorder_sale ORDER BY DocNo DESC LIMIT 1";
+			$Sql1 = "SELECT COALESCE(CONVERT(SUBSTRING(DocNo,-5),UNSIGNED INTEGER),0)+1 AS DocNo FROM saleorder_sale ORDER BY ID DESC LIMIT 1";
+			//$Sql1 = "SELECT COALESCE(MAX(CONVERT(SUBSTRING(DocNo,-4),UNSIGNED INTEGER)),0)+1 AS DocNo FROM saleorder_sale ORDER BY DocNo DESC LIMIT 1";
 			
 			$meQuery = mysqli_query($conn,$Sql1);
 			while ($Result = mysqli_fetch_assoc($meQuery))
