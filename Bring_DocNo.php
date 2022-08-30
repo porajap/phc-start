@@ -13,6 +13,11 @@ if( $_REQUEST["add"]== 0){
 	$_SESSION["Qty"] = "";
 	$_SESSION["Price"] = "";
 	$_SESSION["Detail"] = "";
+
+	if($_REQUEST["Cus_Code"] == "" ){
+		header('location:CustomerBring.php');
+		return;
+	}
 }else{
 	if($_REQUEST["DocNo"] != "" ) $_SESSION["DocNo"] = $_REQUEST["DocNo"];
 }
@@ -29,10 +34,8 @@ if($_REQUEST["Cus_Code"] != "" ){
 		header('location:CustomerBring.php');
 		return;
 	}
-}else{
-	header('location:CustomerBring.php');
-	return;
 }
+
 
 	$xTitle = $_SESSION["xTitle"];
 	$Area = $_SESSION["Area"];
