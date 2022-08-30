@@ -40,7 +40,7 @@ session_start();
     <div class="row xTop1">
         <div class="col">
             <label for="inputTxt1" class="visually-hidden">Search</label>
-            <input type="Text" class="form-control" id="inputTxt1" placeholder="ค้นหาแจ๊ป">
+            <input type="Text" class="form-control" id="inputTxt1" placeholder="ค้นหา">
         </div>
         <div class="col-auto">
             <button type="submit" class="btn btn-primary mb-3" onclick="SearchData()">ค้นหา</button>
