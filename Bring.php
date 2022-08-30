@@ -162,7 +162,7 @@ session_start();
                     })
                 }
 
-            },
+            }, 
             failure: function(result) {
                 alert(result);
             },
