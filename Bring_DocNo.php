@@ -20,6 +20,9 @@ if( $_REQUEST["add"]== 0){
 if($_REQUEST["Cus_Code"] != "" ){
 	$CusCode = $_REQUEST["Cus_Code"];
 	$_SESSION["Cus_Code"] = $CusCode;
+}else{
+	header('location:CustomerBring.php');
+	return;
 }
 
 	$xTitle = $_SESSION["xTitle"];
@@ -60,7 +63,7 @@ if($_REQUEST["Cus_Code"] != "" ){
 					$Sql3 = "INSERT bring (DocNo,DocDate,Cus_Code,Area_Code) ";
 					$Sql3 .= " VALUES ";
 					$Sql3 .= "('$DocNo',NOW(),'$CusCode','$Area')";
-					
+
 					$meQuery = mysqli_query($conn,$Sql3);
 			}
 
