@@ -25,8 +25,9 @@ require 'connect.php';
 		$Sql .= "SELECT item.Item_Code,item.NameTH,item.SalePrice AS Price ";
 		$Sql .= "FROM item ";
 		$Sql .= "WHERE (item.Item_Code LIKE '%$Search%' OR item.NameTH LIKE '%$Search%') ";
-		$Sql .= "AND item.Grp_1 = 1 AND item.IsCancel = 0 ";
-		$Sql .= "ORDER BY item.Item_Code ASC LIMIT 20";
+		//$Sql .= "AND item.IsCancel = 0 ";
+		$Sql .= "AND item.Grp_1 IN ('1') AND item.IsCancel = 0 ";
+		$Sql .= "ORDER BY item.Item_Code ASC LIMIT 100";
 
 	//echo $Sql."<br>";
 	$Search = "";
