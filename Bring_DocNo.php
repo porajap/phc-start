@@ -20,6 +20,15 @@ if( $_REQUEST["add"]== 0){
 if($_REQUEST["Cus_Code"] != "" ){
 	$CusCode = $_REQUEST["Cus_Code"];
 	$_SESSION["Cus_Code"] = $CusCode;
+
+	$Sql1 = "SELECT COUNT(*) countCus FROM customer WHERE Cus_Code = '$CusCode'";
+	$meQuery = mysqli_query($conn,$Sql1);
+	$Result = mysqli_fetch_assoc($meQuery);
+
+	if($Result['countCus'] == 0){
+		header('location:CustomerBring.php');
+		return;
+	}
 }else{
 	header('location:CustomerBring.php');
 	return;
