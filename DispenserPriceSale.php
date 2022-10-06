@@ -24,8 +24,11 @@ require 'connect.php';
 
 		$Sql .= "SELECT item.Item_Code,item.NameTH,item.SalePrice AS Price ";
 		$Sql .= "FROM item ";
+		$Sql .= "INNER JOIN item_category_sub ON item.CategorySub_Code = item_category_sub.CategorySub_Code ";
+		$Sql .= "INNER JOIN item_category ON item_category.Category_Code = item_category_sub.Category_Code ";
+  		$Sql .= "INNER JOIN item_category_main ON item_category_main.CategoryMain_Code = item_category.CategoryMain_Code ";
 		$Sql .= "WHERE (item.Item_Code LIKE '%$Search%' OR item.NameTH LIKE '%$Search%') ";
-		$Sql .= "AND item.Grp_1 = 1  AND item.IsCancel = 0 ";
+		$Sql .= "AND item_category_main.CategoryMain_Code = 16  AND item.IsCancel = 0 ";
 		$Sql .= "ORDER BY item.Item_Code ASC LIMIT 20";
 
 	//echo $Sql."<br>";
