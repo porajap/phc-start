@@ -32,7 +32,6 @@ function showDateDetail($conn)
             acc_delegate.Sumtotal, 
             acc_delegate.img_slip, 
             acc_delegate.img_slip2,
-            acc_delegate.img_slip3,
             acc_delegate.Bank, 
             acc_delegate.branch_Bank, 
             DATE_FORMAT(acc_delegate.dateBank,'%d-%m-%Y') AS dateBank,
@@ -70,8 +69,6 @@ function SaveEdit($conn)
 		$data_imageSlip	= $_POST["data_imageSlip"];
     $imageSlip2	= $_POST["imageSlip2"];
 		$data_imageSlip2	= $_POST["data_imageSlip2"];
-    $imageSlip3	= $_POST["imageSlip3"];
-		$data_imageSlip3	= $_POST["data_imageSlip3"];
 
 		$Select_Bank	= $_POST["Select_Bank"];
 		$Text_branch	= $_POST["Text_branch"];
@@ -86,17 +83,11 @@ function SaveEdit($conn)
 
 		$Text_totaltax	= $_POST["Text_totaltax"];
 		$Radiotax	= $_POST["Radiotax"];
-
-  if($Radiotax==3){
-    $Text_totaltax = 0;
-  }
-
     $Cus_Code	= $_POST["Cus_Code"];
 		$Area	= $_POST["Area"];
 
     $text_imageSlip	= $_POST["text_imageSlip"];
     $text_imageSlip2	= $_POST["text_imageSlip2"];
-    $text_imageSlip3	= $_POST["text_imageSlip3"];
     $text_imageTax	= $_POST["text_imageTax"];
     $Text_number	= $_POST["Text_number"];
     $Text_total_check	= $_POST["Text_total_check"];
@@ -115,33 +106,42 @@ function SaveEdit($conn)
 
     //---------------------------------------------------------------------------------------------
     if ($_FILES['imageSlip'] != "") {
+      // if($imageSlip != ""){
+      //   unlink('../imageSlip/' . $imageSlip);
+      // }
+      // copy($_FILES['imageSlip']['tmp_name'], '../imageSlip/' . $imageSlip_now);
+  
+      // $imageSlip_name = $imageSlip_now;
+
+
       if($imageSlip != ""){
         unlink('../imageSlip/' . $imageSlip);
       }
       copy($_FILES['imageSlip']['tmp_name'], '../imageSlip/' . $imageSlip_now);
+ 
   
-      $imageSlip_name = $imageSlip_now;
+     
   
-      // $cfg_thumb =  (object) array(
-      //   "source" => "../imageSlip/" . $imageSlip_now,                // ตำแหน่งและชื่อไฟล์ต้นฉบับ
-      //   "destination" => "../imageSlip/" . $imageSlip_now,   // ตำแแหน่งและชื่อไฟล์ที่สร้างใหม่ ถ้าเลือกสร้างเป็นไฟล์ใหม่
-      //   "width" => 500,         //  กำหนดความกว้างรูปใหม่
-      //   "height" => 500,       //  กำหนดความสูงรูปใหม่
-      //   "background" => "#fff",    // กำหนดสีพื้นหลังรูปใหม่ (#FF0000) ถ้าไม่กำหนดและ เป็น gif หรือ png จะแสดงเป็นโปร่งใส
-      //   "output" => "",        //  กำหนดนามสกุลไฟล์ใหม่ jpg | gif หรือ png ถ้าไม่กำหนด จะใช้ค่าเริ่มต้นจากต้นฉบับ
-      //   "show" => 0,           //  แสดงเป็นรูปภาพ หรือสร้างเป็นไฟล์ 0=สร้างเป็นไฟล์ | 1=แสดงเป็นรูปภาพ
-      //   "crop" => 1                //  กำหนด crop หรือ ไม่ 0=crop | 1=crop
-      // );
-      // createthumb(
-      //   $cfg_thumb->source,
-      //   $cfg_thumb->destination,
-      //   $cfg_thumb->width,
-      //   $cfg_thumb->height,
-      //   $cfg_thumb->background,
-      //   $cfg_thumb->output,
-      //   $cfg_thumb->show,
-      //   $cfg_thumb->crop
-      // );
+      $cfg_thumb =  (object) array(
+        "source" => "../imageSlip/" . $imageSlip_now,                // ตำแหน่งและชื่อไฟล์ต้นฉบับ
+        "destination" => "../imageSlip/" . $imageSlip_now,   // ตำแแหน่งและชื่อไฟล์ที่สร้างใหม่ ถ้าเลือกสร้างเป็นไฟล์ใหม่
+        "width" => 500,         //  กำหนดความกว้างรูปใหม่
+        "height" => 500,       //  กำหนดความสูงรูปใหม่
+        "background" => "#fff",    // กำหนดสีพื้นหลังรูปใหม่ (#FF0000) ถ้าไม่กำหนดและ เป็น gif หรือ png จะแสดงเป็นโปร่งใส
+        "output" => "",        //  กำหนดนามสกุลไฟล์ใหม่ jpg | gif หรือ png ถ้าไม่กำหนด จะใช้ค่าเริ่มต้นจากต้นฉบับ
+        "show" => 0,           //  แสดงเป็นรูปภาพ หรือสร้างเป็นไฟล์ 0=สร้างเป็นไฟล์ | 1=แสดงเป็นรูปภาพ
+        "crop" => 1                //  กำหนด crop หรือ ไม่ 0=crop | 1=crop
+      );
+      createthumb(
+        $cfg_thumb->source,
+        $cfg_thumb->destination,
+        $cfg_thumb->width,
+        $cfg_thumb->height,
+        $cfg_thumb->background,
+        $cfg_thumb->output,
+        $cfg_thumb->show,
+        $cfg_thumb->crop
+      );
       } else {
         if ($data_imageSlip == "default") {
 
@@ -201,51 +201,6 @@ function SaveEdit($conn)
   }else {
     $imageSlip_name2 = $text_imageSlip2;
   }
-  //--------------------------------------------------------------------------------------------------------------
-  if($text_imageSlip3 == ""){
-    $random3 = rand(00000, 99999);
-    $imageSlip_now3 = "PHC_".$random3. ".png";
-     if ($_FILES['imageSlip3'] != "") {
-       if($imageSlip3 != ""){
-         unlink('../imageSlip/' . $imageSlip3);
-       }
-       copy($_FILES['imageSlip3']['tmp_name'], '../imageSlip/' . $imageSlip_now3);
-    
-        $imageSlip_name3 = $imageSlip_now3;
-    
-       // $cfg_thumb =  (object) array(
-       //   "source" => "../imageSlip/" . $imageSlip_now2,                // ตำแหน่งและชื่อไฟล์ต้นฉบับ
-       //   "destination" => "../imageSlip/" . $imageSlip_now2,   // ตำแแหน่งและชื่อไฟล์ที่สร้างใหม่ ถ้าเลือกสร้างเป็นไฟล์ใหม่
-       //   "width" => 500,         //  กำหนดความกว้างรูปใหม่
-       //   "height" => 500,       //  กำหนดความสูงรูปใหม่
-       //   "background" => "#fff",    // กำหนดสีพื้นหลังรูปใหม่ (#FF0000) ถ้าไม่กำหนดและ เป็น gif หรือ png จะแสดงเป็นโปร่งใส
-       //   "output" => "",        //  กำหนดนามสกุลไฟล์ใหม่ jpg | gif หรือ png ถ้าไม่กำหนด จะใช้ค่าเริ่มต้นจากต้นฉบับ
-       //   "show" => 0,           //  แสดงเป็นรูปภาพ หรือสร้างเป็นไฟล์ 0=สร้างเป็นไฟล์ | 1=แสดงเป็นรูปภาพ
-       //   "crop" => 1                //  กำหนด crop หรือ ไม่ 0=crop | 1=crop
-       // );
-       // createthumb(
-       //   $cfg_thumb->source,
-       //   $cfg_thumb->destination,
-       //   $cfg_thumb->width,
-       //   $cfg_thumb->height,
-       //   $cfg_thumb->background,
-       //   $cfg_thumb->output,
-       //   $cfg_thumb->show,
-       //   $cfg_thumb->crop
-       // );
-       } else {
-         if ($data_imageSlip3 == "default") {
-   
-           if($imageSlip3 != ""){
-           unlink('../imageSlip/' . $imageSlip3);
-           }
-   
-         $imageSlip_name3 = "";
-         }
-       }
-  }else {
-    $imageSlip_name3 = $text_imageSlip3;
-  }
  //---------------------------------------------------------------------------------------------
  if($text_imageTax == ""){
 
@@ -292,32 +247,15 @@ function SaveEdit($conn)
     }else {
       $imageTax_name = $text_imageTax;
     }
-
-
-
     $txt_dateBank = explode("-", $txt_dateBank);
     $txt_dateBank = $txt_dateBank[2].'-'.$txt_dateBank[1].'-'.$txt_dateBank[0];
-
-
-       $Sqlqty = "SELECT
-                  COUNT(acc_delegate_detail.RowId) AS qty
-                FROM
-                  acc_delegate_detail
-                  WHERE acc_delegate_detail.DocNo_acc_delegate = '$DocNoP' ";
-
-		$meQueryqty = mysqli_query($conn, $Sqlqty);
-		$Resultqty = mysqli_fetch_assoc($meQueryqty);
-    $qty = $Resultqty['qty'];
 
         $query = "  UPDATE acc_delegate 
                     SET DocDate = DATE(NOW()),
                         Ispay = '$Radiopay',
-                        IsStatus = '1',
-                        IsStatusTax = '1',
                         Sumtotal = '$Text_total',
                         img_slip = '$imageSlip_name',
                         img_slip2 = '$imageSlip_name2',
-                        img_slip3 = '$imageSlip_name3',
                         Bank = '$Select_Bank',
                         branch_Bank = '$Text_branch',
                         dateBank = '$txt_dateBank',
@@ -325,7 +263,7 @@ function SaveEdit($conn)
                         TaxPay = '$text_sum_tax',
                         Sumtotal_Tax = '$Text_totaltax',
                         TaxType = '$Radiotax',
-                        QtyDoc = '$qty',
+                        QtyDoc = '0',
                         Cus_Code = '$Cus_Code',
                         AreaCode = '$Area',
                         check_number = '$Text_number',
@@ -354,8 +292,6 @@ function SaveDoc($conn)
 		$data_imageSlip	= $_POST["data_imageSlip"];
     $imageSlip2	= $_POST["imageSlip2"];
 		$data_imageSlip2	= $_POST["data_imageSlip2"];
-    $imageSlip3	= $_POST["imageSlip3"];
-		$data_imageSlip3	= $_POST["data_imageSlip3"];
 
 		$Select_Bank	= $_POST["Select_Bank"];
 		$Text_branch	= $_POST["Text_branch"];
@@ -370,12 +306,6 @@ function SaveDoc($conn)
 
 		$Text_totaltax	= $_POST["Text_totaltax"];
 		$Radiotax	= $_POST["Radiotax"];
-
-    if($Radiotax==3){
-      $Text_totaltax = 0;
-    }
-
-
     $Cus_Code	= $_POST["Cus_Code"];
 		$Area	= $_POST["Area"];
     $Text_number	= $_POST["Text_number"];
@@ -471,47 +401,6 @@ function SaveDoc($conn)
         $imageSlip_name2 = "";
         }
       }
-     //---------------------------------------------------------------------------------------------
-      $random3 = rand(00000, 99999);
-      $imageSlip_now3 = "PHC_".$random3. ".png";
-          if ($_FILES['imageSlip3'] != "") {
-            if($imageSlip3 != ""){
-              unlink('../imageSlip/' . $imageSlip3);
-            }
-            copy($_FILES['imageSlip3']['tmp_name'], '../imageSlip/' . $imageSlip_now3);
-        
-            $imageSlip_name3 = $imageSlip_now3;
-        
-            // $cfg_thumb =  (object) array(
-            //   "source" => "../imageSlip/" . $imageSlip_now2,                // ตำแหน่งและชื่อไฟล์ต้นฉบับ
-            //   "destination" => "../imageSlip/" . $imageSlip_now2,   // ตำแแหน่งและชื่อไฟล์ที่สร้างใหม่ ถ้าเลือกสร้างเป็นไฟล์ใหม่
-            //   "width" => 500,         //  กำหนดความกว้างรูปใหม่
-            //   "height" => 500,       //  กำหนดความสูงรูปใหม่
-            //   "background" => "#fff",    // กำหนดสีพื้นหลังรูปใหม่ (#FF0000) ถ้าไม่กำหนดและ เป็น gif หรือ png จะแสดงเป็นโปร่งใส
-            //   "output" => "",        //  กำหนดนามสกุลไฟล์ใหม่ jpg | gif หรือ png ถ้าไม่กำหนด จะใช้ค่าเริ่มต้นจากต้นฉบับ
-            //   "show" => 0,           //  แสดงเป็นรูปภาพ หรือสร้างเป็นไฟล์ 0=สร้างเป็นไฟล์ | 1=แสดงเป็นรูปภาพ
-            //   "crop" => 1                //  กำหนด crop หรือ ไม่ 0=crop | 1=crop
-            // );
-            // createthumb(
-            //   $cfg_thumb->source,
-            //   $cfg_thumb->destination,
-            //   $cfg_thumb->width,
-            //   $cfg_thumb->height,
-            //   $cfg_thumb->background,
-            //   $cfg_thumb->output,
-            //   $cfg_thumb->show,
-            //   $cfg_thumb->crop
-            // );
-            } else {
-              if ($data_imageSlip3 == "default") {
-        
-                if($imageSlip3 != ""){
-                unlink('../imageSlip/' . $imageSlip3);
-                }
-        
-              $imageSlip_name3 = "";
-              }
-            }
    //---------------------------------------------------------------------------------------------
 
     $random2 = rand(00000, 99999);
@@ -593,7 +482,6 @@ function SaveDoc($conn)
                         Sumtotal = '$Text_total',
                         img_slip = '$imageSlip_name',
                         img_slip2 = '$imageSlip_name2',
-                        img_slip3 = '$imageSlip_name3',
                         Bank = '$Select_Bank',
                         branch_Bank = '$Text_branch',
                         dateBank = '$txt_dateBank',

@@ -38,14 +38,16 @@ function checklogin($conn,$DATA)
     // $password = md5($DATA['PASSWORD']);
     $boolean = false;
     $Count=0;
-    $Sql = "SELECT Employee_Code,CONCAT(FName,' ',LName) AS xName,AreaCode,isChart
+    $Sql = "SELECT Employee_Code,xUname,IsShowBoothDetail,CONCAT(FName,' ',LName) AS xName,AreaCode,isChart
     FROM employee WHERE xUname = '$user' AND xPword = '$password'";
     $meQuery = mysqli_query($conn,$Sql);
     while ($Result = mysqli_fetch_assoc($meQuery)) {
       $ID                   = $Result['ID'];
       $_SESSION['Em_Code']  = $Result['Employee_Code'];
       $_SESSION['xName']    = $Result['xName'];
+      $_SESSION['xUname']    = $Result['xUname'];
       $_SESSION['Area']     = $Result['AreaCode'];
+      $_SESSION['IsShowBoothDetail']     = $Result['IsShowBoothDetail'];
       $isChart              = $Result['isChart'];
       $Count++;
       $boolean = true;

@@ -36,10 +36,10 @@
 	function createDigit($digit) 
 	{ 
 		$num = strlen($digit); 
-		$max = 4; 
+		$max = 5; 
 		$zeros = $max - $num; 
 		
-		$new_digit = str_repeat("0",$zeros)."".$digit;	
+		$new_digit = str_repeat("0", $zeros)."".$digit;	
 		return $new_digit; 
 	}
 

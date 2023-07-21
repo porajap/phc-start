@@ -21,8 +21,8 @@ if( $_REQUEST["add"]== 0){
 if($_REQUEST["Cus_Code"] != "" ){
 	$CusCode = $_REQUEST["Cus_Code"];
 	$_SESSION["Cus_Code"] = $CusCode;
-}
 
+}
 	$Area = $_SESSION["Area"];
 	$xTitle = $_SESSION["xTitle"];
 	$CusCode = $_SESSION["Cus_Code"];
@@ -30,17 +30,39 @@ if($_REQUEST["Cus_Code"] != "" ){
 	$UnitCode = $_SESSION["UnitCode"];
 
 	if($DocNo == "" || $DocNo == null ){
-			$Sql1 = "SELECT COALESCE(CONVERT(SUBSTRING(DocNo,-5),UNSIGNED INTEGER),0)+1 AS DocNo FROM saleorder_sale WHERE saleorder_sale.IsCancel = 0 ORDER BY ID DESC LIMIT 1";
-			//$Sql1 = "SELECT COALESCE(MAX(CONVERT(SUBSTRING(DocNo,-4),UNSIGNED INTEGER)),0)+1 AS DocNo FROM saleorder_sale ORDER BY DocNo DESC LIMIT 1";
+	
+			// $Sql1 = "SELECT COALESCE(CONVERT(SUBSTRING(DocNo,-5),UNSIGNED INTEGER),0)+1 AS DocNo FROM saleorder_sale ORDER BY ID DESC LIMIT 1";
+			// //$Sql1 = "SELECT COALESCE(MAX(CONVERT(SUBSTRING(DocNo,-4),UNSIGNED INTEGER)),0)+1 AS DocNo FROM saleorder_sale WHERE saleorder_sale.IsCancel = 0 ORDER BY DocNo DESC LIMIT 1";
 			
-			$meQuery = mysqli_query($conn,$Sql1);
+			// $meQuery = mysqli_query($conn,$Sql1);
+			// while ($Result = mysqli_fetch_assoc($meQuery))
+			// {
+			// 	$DocNo = $Result["DocNo"];
+			// }
+			// if($DocNo != ""){
+			// 	$DocNo = "Q" . substr(date('Ym'),2,6) ."-" . createDigit($DocNo);
+			// }
+
+			$sql = "SELECT 
+
+						CONCAT
+						(
+								'Q', 
+								DATE_FORMAT(NOW(),'%y%m-'), 
+								LPAD((COALESCE(MAX(CONVERT(SUBSTRING(DocNo, 7, 5), UNSIGNED INTEGER)), 0) + 1), 5, 0)
+						) AS docNo
+					
+					FROM saleorder_sale
+					
+					WHERE DocNo LIKE CONCAT('Q', DATE_FORMAT(NOW(),'%y%m'),'%')
+					
+					ORDER BY DocNo DESC LIMIT 1";
+			$meQuery = mysqli_query($conn, $sql);
 			while ($Result = mysqli_fetch_assoc($meQuery))
 			{
-				$DocNo = $Result["DocNo"];
+				$DocNo = $Result["docNo"];
 			}
-			if($DocNo != ""){
-				$DocNo = "Q" . substr(date('Ym'),2,6) ."-" . createDigit($DocNo);
-			}
+			
 	}
 
 			$Cn = 0;

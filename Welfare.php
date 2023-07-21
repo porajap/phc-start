@@ -203,7 +203,7 @@ require 'connect.php';
                                     bring = "3";
                                 }
                             
-                                Str += `<a class="list-group-item list-group-item-action" href="Welfare_Detail.php?DocNo=${temp[i]["DocNo"]}&DocNoAcc=${temp[i]["DocNoAcc"]}&Sel=${bring}&Price=${price}&CheckT=${temp[i]["CheckT"]}&IsCopy=${temp[i]["IsCopy"]}&IsDispenser=${temp[i]["IsDispenser"]}">
+                                Str += `<a class="list-group-item list-group-item-action" href="Welfare_Detail.php?DocNo=${temp[i]["DocNo"]}&DocNoAcc=${temp[i]["DocNoAcc"]}&Sel=${bring}&Price=${price}&CheckT=${temp[i]["CheckT"]}&IsCopy=${temp[i]["IsCopy"]}">
                                                 <div class="row align-items-start xTb">
                                                         <div class="col">
                                                             <img src="${img1}" width="25" height="25" /> เบิกครั้งที่ 1

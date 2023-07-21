@@ -3,7 +3,7 @@
  * set var
  */
 // $cfHost = "poseintelligence.dyndns.biz:3308";
-$cfHost = "poseintelligence.dyndns.biz:3308";
+$cfHost = "10.11.9.21:3306";
 $cfUser = "root";
 $cfPassword = "A$192dijd";
 $cfDatabase = "phc";

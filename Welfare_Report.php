@@ -148,6 +148,7 @@ require 'connect.php';
         $("#SelYear").html(Str);
     }
 
+
     function SearchData() {
         var SelMonth = document.getElementById("SelMonth").value;
         var SelYear = document.getElementById("SelYear").value;
@@ -168,9 +169,8 @@ require 'connect.php';
         
 
         var url = "report/Welfare_Report.php?SelMonth="+SelMonth+"&SelYear="+SelYear+"&Area="+Area;
-        window.open(url);
+        window.open(url,"_self");
 
-        
     }
 //----------------------------------------------------------------------------------------------------------------------
     function senddata(data) {

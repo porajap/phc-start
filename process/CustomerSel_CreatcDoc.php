@@ -20,7 +20,26 @@
 			SearchDataSaleDoc_Modal($conn,$DATA);
 		}else if($DATA['STATUS'] == 'update_QtyDoc'){
 			update_QtyDoc($conn,$DATA);
+		}else if($DATA['STATUS'] == 'update_TxtSum'){
+			update_TxtSum($conn,$DATA);
 		}
+	}
+
+	function update_TxtSum($conn,$DATA){
+		$DocNoP = $DATA['DocNoP'];
+		$Text_totaltax = $DATA['Text_totaltax'];
+
+		$Sql_updateQty = "UPDATE acc_delegate 
+							SET acc_delegate.Sumtotal_Tax = '$Text_totaltax'
+							WHERE acc_delegate.DocNo = '$DocNoP' ";
+		$conn->query( $Sql_updateQty );
+
+		$return['status']	= "success";
+		$return['form']		= "update_TxtSum";
+	
+		echo json_encode($return);
+		mysqli_close($conn);
+		die;
 	}
 
 	function update_QtyDoc($conn,$DATA){
@@ -147,6 +166,7 @@
 	function SearchDataSaleDoc($conn,$DATA){
 		$Cus_Code	= $DATA["Cus_Code"];
 		$Area	= $DATA["Area"];
+		$inputTxtSearch	= $DATA["inputTxtSearch"];
 		$count = 0;
 
 		$Sql = "SELECT
@@ -167,7 +187,9 @@
 					AND customer.Cus_Code='$Cus_Code'
 					AND sale.IsCheckIn=0
 					AND sale.DocNoAcc IS NOT NULL
+					AND sale.DocNoAcc LIKE '%$inputTxtSearch%'
 					AND sale.Sale_Status=1
+					AND sale.Cn = 0
 					AND sale.IsPayAcc_delegate=0
 				UNION
 				SELECT
@@ -188,9 +210,11 @@
 						AND customer.Cus_Code='$Cus_Code'
 					AND sale_x.IsCheckIn=0
 						AND sale_x.DocNoAcc IS NOT NULL
+						AND sale_x.DocNoAcc LIKE '%$inputTxtSearch%'
 					AND sale_x.Sale_Status=1
+					AND sale_x.Cn = 0
 					AND sale_x.IsPayAcc_delegate=0
-					ORDER BY DocDate ASC";
+					";
 		$meQuery = mysqli_query($conn, $Sql);
 		while ($Result = mysqli_fetch_assoc($meQuery)) {
 			$return[$count]['DocNo']		= $Result['DocNo'];
@@ -232,10 +256,11 @@
 				WHERE
 					acc_delegate_detail.DocNo_acc_delegate = '$DocNoP' 
 				ORDER BY
-					acc_delegate_detail.DateDocSale DESC";
+					acc_delegate_detail.DateDocSale ASC";
 
 		$meQuery = mysqli_query($conn, $Sql);
 		$sumtotal=0;
+		
 		while ($Result = mysqli_fetch_assoc($meQuery)) {
 			$return[$count]['DocNoAcc']		= $Result['RefDocNoAcc'];
 			$return[$count]['Total']		= number_format($Result['Sumtotal'],2);
@@ -249,7 +274,20 @@
 			$count++;
 			$sumtotal += $Result['Sumtotal']; 
 		}
+		$tax=0;
+		$sumtotal_tax = 0;
+        $tax = ($sumtotal/1.07) *1/100;
+
+        $sumtotal_tax = $sumtotal - $tax;
+
+		$Sql_acc_delegate = "UPDATE acc_delegate 
+							SET acc_delegate.TaxPay = '$sumtotal_tax',
+								acc_delegate.Sumtotal = '$sumtotal'
+							WHERE acc_delegate.DocNo = '$DocNoP' ";
+		$conn->query( $Sql_acc_delegate );
+
 		$return['Sumtotal']	= number_format($sumtotal,2);
+		$return['Sumtotal_tax']	= number_format($sumtotal_tax,2);
 		$return['status']	= "success";
 		$return['form']		= "SearchDataSalecDocEdit";
 		$return['rCnt']		= $count;
@@ -315,7 +353,8 @@
 		$IsCopy = $DATA['IsCopy'];
 
 		$Sql = "SELECT
-					acc_delegate_detail.RefDocNoAcc
+					acc_delegate_detail.RefDocNoAcc,
+					acc_delegate_detail.DocNo_acc_delegate
 				FROM
 				acc_delegate_detail
 				WHERE acc_delegate_detail.RowId = '$RowId'
@@ -323,6 +362,8 @@
 		$meQuery = mysqli_query($conn, $Sql);
 		$Result = mysqli_fetch_assoc($meQuery);
 		$RefDocNoAcc = $Result['RefDocNoAcc'];
+		$DocNo_acc_delegate = $Result['DocNo_acc_delegate'];
+	
 
 		$query = "DELETE FROM acc_delegate_detail WHERE RowId ='$RowId'";
 		mysqli_query($conn, $query);
@@ -338,6 +379,33 @@
 								WHERE sale.DocNoAcc = '$RefDocNoAcc' ";
 			$conn->query( $Sql_updatebill );
 		}
+
+		$SqlUpdateSum = "SELECT
+								SUM(acc_delegate_detail.Sumtotal) AS Sumtotal
+							FROM
+								acc_delegate_detail
+								INNER JOIN acc_delegate ON acc_delegate_detail.DocNo_acc_delegate = acc_delegate.DocNo 
+							WHERE
+								acc_delegate_detail.DocNo_acc_delegate = '$DocNo_acc_delegate' 
+								GROUP BY  acc_delegate.DocNo 
+						";
+
+		$meQueryUpdateSum  = mysqli_query($conn, $SqlUpdateSum );
+		$ResultUpdateSum  = mysqli_fetch_assoc($meQueryUpdateSum );
+		$Sumtotal2 = $ResultUpdateSum['Sumtotal'];
+
+		$sumtotal_tax = 0;
+        $tax = ($Sumtotal2/1.07) *1/100;
+
+        $sumtotal_tax = $Sumtotal2 - $tax;
+
+
+			$Sql_update_sumtotal = "UPDATE acc_delegate 
+									SET acc_delegate.Sumtotal = '$Sumtotal2',
+										acc_delegate.TaxPay = '$sumtotal_tax',
+										acc_delegate.Sumtotal_Tax = '$tax'
+									WHERE acc_delegate.DocNo = '$DocNo_acc_delegate' ";
+			$conn->query( $Sql_update_sumtotal );
 
 	$return['status']	= "success";
 	$return['form']		= "delete_detail";

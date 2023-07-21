@@ -114,7 +114,7 @@ require 'connect.php';
         <div class="card" style="border: solid;border-color: darkgray;">
             <div class="col-10 mt-4" style="margin-left: 1%;">
                 <label for="inputTxt1" class="visually-hidden">Search</label>
-                <input type="Text" class="form-control" id="inputTxt1" placeholder="ค้นหาเลขที่บิล">
+                <input type="Text" class="form-control" id="inputTxtSearch" placeholder="ค้นหาเลขที่บิล" onkeyup=" SearchDataSaleDoc();">
             </div>
             <div class="card-body"  style="max-height: 350px;overflow-y: auto;">
                     <div class="modal-body row">
@@ -162,7 +162,7 @@ require 'connect.php';
                  
                 </div>
                 <div class="col-3  mb-3" style="text-align: right;">
-                    <label for="inputPassword" class=" col-form-label"><input class="form-check-input" type="radio" name="Radio_Sum" id="Radio_Sum2" value="2" onclick="chk_typeSum();"> ยอดหลังหักภาษี </label>
+                    <label for="inputPassword" class=" col-form-label"><input class="form-check-input" type="radio" name="Radio_Sum" id="Radio_Sum2" value="2" onclick="chk_typeSum();"> ยอดหลังหักภาษี1%</label>
                  </div>
             
                 <div class="col-5 mb-3 row">
@@ -183,8 +183,8 @@ require 'connect.php';
             <div class="col-10 mt-4" style="margin-left: 1%;">
                 <label for="inputTxt1" style="font-size: 16px;font-weight: bold;" class="">วิธีการจ่าย</label>
             </div>
-
-            <div class="col-10 mt-3 " style="margin-left: 3%;">
+           
+            <div class="col-10 mt-3 " style="margin-left: 3%;font-size: 13px;">
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="Radiopay" id="Radiopay1" value="1" checked onclick="chkRadiopay();">
                     <label class="form-check-label" for="Radiopay1">เงินสด</label>
@@ -202,8 +202,9 @@ require 'connect.php';
 
             <div class="col-10 mt-3 " style="margin-left: 1%;">
                 <div class=" mt-3" style="width: 90%;">
-                <input style="text-align: right;" type="Text" class="form-control" id="text_imageSlip"  hidden>
-                <input style="text-align: right;" type="Text" class="form-control" id="text_imageSlip2"  hidden>
+                    <input style="text-align: right;" type="Text" class="form-control" id="text_imageSlip"  hidden>
+                    <input style="text-align: right;" type="Text" class="form-control" id="text_imageSlip2"  hidden>
+                    <input style="text-align: right;" type="Text" class="form-control" id="text_imageSlip3"  hidden>
                     <label style="font-size: 16px;font-weight: bold;" class="col-sm-4 col-form-label ">อัพโหลดรูป Pay In / Slip</label>
                     <div class="row">
                         <div class="col-6" >
@@ -227,7 +228,23 @@ require 'connect.php';
                        
 
                     </div>
+                    <div class="row mt-3">
+                    </div>
+                    <div class="row mt-5">
+                        <div class="col-6" >
+                            <p>รูปที่ 3</p>
+                            <div class='form-group row'>
+                                <div class="" style="height: 200px;margin-left: 3%;">
+                                    <input  type="file" id="imageSlip3" accept="image/x-png,image/gif,image/jpeg" class="dropify">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
                  
+                </div>
+                <div class="mt-5" >
+                   
                 </div>
 
                 <div class="mb-3 mt-3" id="div_number">
@@ -255,55 +272,54 @@ require 'connect.php';
                 <div style="font-size: 16px;font-weight: bold;" class="mb-3 mt-3">
                     <label for="exampleFormControlTextarea1" class="form-label">ยอดเงิน</label>
                     <input type="text" class="form-control" id="Text_total"  style="margin-left: 1%;" placeholder="ยอดเงินรวมหน้าเช็ค" hidden>
-                    <input type="text" class="form-control" id="Text_total_check"  style="margin-left: 1%;" placeholder="ยอดเงินรวมหน้าเช็ค" >
+                    <input type="text" class="form-control numonly" id="Text_total_check"  style="margin-left: 1%;" placeholder="ยอดเงินรวมหน้าเช็ค" >
                 </div>
 
                 
 
                 <hr>
             <!-- ----------------------------------------------------------------------------------- -->
-            <div class="col-10 mt-4" style="margin-left: 1%;">
-                <label style="font-size: 16px;font-weight: bold;" for="inputTxt1" class="">รูปแบบภาษี</label>
-            </div>
-                <div class="col-10 mt-3 mb-3" style="margin-left: 3%;">
+            <!-- <div class="col-12 mt-4" style="margin-left: 1%;"> -->
+                <div class="row mt-3 mb-3" style="margin-left: 3%;">
+                    <label style="font-size: 16px;font-weight: bold;" for="inputTxt1" class="">รูปแบบภาษี</label>
+                </div>
+                <div class="row mt-3 mb-3" style="margin-left: 3%;">
 
-
-                
-                    <div class="form-check form-check-inline">
+                    <div class="col-4" style="font-size: 13px;">
                         <input class="form-check-input" type="radio" name="Radiotax" id="Radiotax1" value="1" checked onclick="chkRadio_Tax();"()>
                         <label class="form-check-label" for="Radiotax1">แนบภาษี</label>
                     </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="Radiotax" id="Radiotax3" value="3" onclick="chkRadio_Tax();">
-                        <label class="form-check-label" for="Radiotax3">ขาดภาษี</label>
-                    </div>
-                    <div class="form-check form-check-inline">
+                    <div class=" col-4" style="font-size: 13px;">
                         <input class="form-check-input" type="radio" name="Radiotax" id="Radiotax2" value="2" onclick="chkRadio_Tax();">
-                        <label class="form-check-label" for="Radiotax2">ไม่แนบภาษี</label>
+                        <label class="form-check-label" for="Radiotax2">ขาดภาษี</label>
+                    </div>
+                    <div class="col-4" style="font-size: 13px;">
+                        <input class="form-check-input" type="radio" name="Radiotax" id="Radiotax3" value="3" onclick="chkRadio_Tax();">
+                        <label class="form-check-label" for="Radiotax3">ไม่แนบภาษี</label>
                     </div>
                 </div>
 
-                <div class=" mt-3" style="width: 50%;" id="div_imageTax">
-                <input style="text-align: right;" type="Text" class="form-control" id="text_imageTax" hidden>
+                <div class="row  mt-3" style="width: 50%;" id="div_imageTax">
+                    <input style="text-align: right;" type="Text" class="form-control" id="text_imageTax" hidden>
                     <label style="font-size: 16px;font-weight: bold;" class="col-sm-4 col-form-label ">อัพโหลดรูป ภาษีหัก ณ ที่จ่าย</label>
                     <div class='form-group row'>
                         <div class="col-md-7" style="height: 200px;margin-left: 3%;">
-                            <input  type="file" id="imageTax" accept="image/x-png,image/gif,image/jpeg" class="dropify">
+                            <input  type="file" id="imageTax" accept="image/x-png,image/gif,image/jpeg"  class="dropify ">
                         </div>
                     </div>
                 </div>
 
-                <div class="mb-3 mt-3" id="div_taxpay" hidden>
+                <div class="row  mb-3 " id="div_taxpay" hidden>
                     <label style="font-size: 16px;font-weight: bold;" for="exampleFormControlTextarea1" class="form-label">กรอกภาษีหัก ณ ที่จ่าย</label>
                     <input type="text" class="form-control" id="Text_taxpay"  placeholder="ภาษีหัก ณ ที่จ่าย" style="margin-left: 1%;">
                 </div>
 
-                <div class="mb-3 mt-3" id="div_Text_totaltax">
+                <div class="row ml-5 mb-3 mt-5" id="div_Text_totaltax">
                     <label style="font-size: 16px;font-weight: bold;" for="exampleFormControlTextarea1" class="form-label">ราคารวม(หักภาษี 1 %)</label>
-                    <input type="text" class="form-control" id="Text_totaltax"  style="margin-left: 1%;" placeholder="ยอดเงินรวมหักภาษี" readonly>
+                    <input type="text" class="form-control" id="Text_totaltax"  style="margin-left: 5%;" placeholder="ยอดเงินรวมหักภาษี" readonly>
                 </div>
                 
-            </div>
+            <!-- </div> -->
 
 
 
@@ -352,7 +368,7 @@ require 'connect.php';
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
-                <button type="button" class="btn btn-primary" onclick="SaveAdd_Docdetail();">เพิ่มรายการ</button>
+                <button type="button" id="btn_SaveAdd" class="btn btn-primary" onclick="SaveAdd_Docdetail();">เพิ่มรายการ</button>
             </div>
             </div>
         </div>
@@ -376,6 +392,7 @@ require 'connect.php';
 
         var drEvent = $('#imageSlip').dropify();
         var drEvent3 = $('#imageSlip2').dropify();
+        var drEvent4 = $('#imageSlip3').dropify();
         var drEvent2 = $('#imageTax').dropify();
 
         drEvent.on('dropify.afterClear ', function(event, element) {
@@ -385,6 +402,11 @@ require 'connect.php';
 
         drEvent3.on('dropify.afterClear ', function(event, element) {
         $('#imageSlip2').data("value", "default");
+        // document.getElementById("show_img1").src = "../img/icon/no-image.jpg";
+        });
+
+        drEvent4.on('dropify.afterClear ', function(event, element) {
+        $('#imageSlip3').data("value", "default");
         // document.getElementById("show_img1").src = "../img/icon/no-image.jpg";
         });
 
@@ -412,6 +434,10 @@ require 'connect.php';
             chkRadiopay();
         }, 300);
         
+
+        $('.numonly').on('input', function() {
+                this.value = this.value.replace(/[^0-9.]/g, ''); //<-- replace all other than given set of values
+        });
     });
 
 
@@ -423,12 +449,12 @@ require 'connect.php';
             $("#div_imageTax").show();
     
             $("#div_Text_totaltax").show(); 
-        }else if(Radiotax==2){
+        }else if(Radiotax==3){
             $("#div_imageTax").hide();
           
             $("#div_Text_totaltax").hide();
         }
-        else if(Radiotax==3){
+        else if(Radiotax==2){
             $("#div_imageTax").hide();
           
           $("#div_Text_totaltax").show();
@@ -458,17 +484,23 @@ require 'connect.php';
     var Radio_Sum= document.querySelector('input[name="Radio_Sum"]:checked').value;  
     var _sumTotal = parseFloat(0);
     if(Radio_Sum=='1'){
-        _sumTotal = $('#text_sum').val();
+        _sumTotal = parseFloat($('#text_sum').val().replace(/,/g, '')/1.07).toFixed(2);
     }else{
-        _sumTotal = $('#text_sum_tax').val();
+       
+        _sumTotal = parseFloat($('#text_sum').val().replace(/,/g, '')/1.07).toFixed(2);
+      
     }
 
     if(_sumTotal){
         _sumTotal =parseFloat(_sumTotal.replace(/,/g, ''));
     }
     const _resultSumTotal = parseFloat(_sumTotal*0.01).toFixed(2);
+    
     $('#Text_totaltax').val(_resultSumTotal);
+
   }
+
+
 
     function getBank() {
       
@@ -481,11 +513,13 @@ require 'connect.php';
     function SearchDataSaleDoc() {
         var Cus_Code = <?= $Cus_Code ?>;
         var Area =   '<?= $Area ?>';
-
+        var inputTxtSearch = $('#inputTxtSearch').val();
+        
         var data = {
                 'STATUS'    : 'SearchDataSaleDoc',
                 'Cus_Code'  : Cus_Code,
                 'Area'  : Area,
+                'inputTxtSearch'  : inputTxtSearch,
             };
         senddata(JSON.stringify(data));
     }
@@ -511,6 +545,18 @@ require 'connect.php';
             };
         senddata(JSON.stringify(data));
     }
+
+    function update_TxtSum() {
+        var DocNoP = '<?= $DocNoP ?>';
+        var Text_totaltax = $('#Text_totaltax').val();
+
+        var data = {
+                'STATUS'    : 'update_TxtSum',
+                'DocNoP'  : DocNoP,
+                'Text_totaltax'  : Text_totaltax,
+            };
+        senddata(JSON.stringify(data));
+  }
     
 
     function SaveAdd_Docdetail() {
@@ -519,6 +565,7 @@ require 'connect.php';
         var Area =   '<?= $Area ?>';
 
         var RadioModal= document.querySelector('input[name="RadioModal"]:checked').value;
+        $('#btn_SaveAdd').attr('disabled','disabled');
 
         $.ajax({
             url: "process/saveDoc_cusSale.php",
@@ -542,8 +589,13 @@ require 'connect.php';
                     confirmButtonText: 'Ok',
                     showConfirmButton: false
                 });
-                setTimeout(function() {
+                setTimeout(function() {     
                     $('#AddDocDetail').modal('toggle');
+
+                    setTimeout(function() {
+                        $('#btn_SaveAdd').removeAttr('disabled');
+                    }, 200);
+                    
                     SearchDataSalecDocEdit();
                     update_QtyDoc();
                 }, 500);
@@ -577,6 +629,7 @@ require 'connect.php';
                         $('#Text_totaltax').val(value.Sumtotal_Tax);
                         $('#text_imageSlip').val(value.img_slip);
                         $('#text_imageSlip2').val(value.img_slip2);
+                        $('#text_imageSlip3').val(value.img_slip3);
                         $('#text_imageTax').val(value.img_tax);
                         $('#Text_number').val(value.check_number);
                         $('#Text_total_check').val(value.SlipPay);
@@ -589,7 +642,7 @@ require 'connect.php';
                         }else if(Ispay=='2'){
                             document.getElementById("Radiopay2").checked = true;
                         }else{
-                            document.getElementById("Radiopay2").checked = true;
+                            document.getElementById("Radiopay3").checked = true;
                         }
                         
                         var TaxType = value.TaxType;
@@ -597,8 +650,12 @@ require 'connect.php';
                             document.getElementById("Radiotax1").checked = true;
                             $("#div_imageTax").show();
                             $("#div_Text_totaltax").show();
-                        }else{
+                        }else if(TaxType =='2'){
                             document.getElementById("Radiotax2").checked = true;
+                            $("#div_imageTax").hide();
+                            $("#div_Text_totaltax").hide();
+                        }else{
+                            document.getElementById("Radiotax3").checked = true;
                             $("#div_imageTax").hide();
                             $("#div_Text_totaltax").hide();
                         }
@@ -613,7 +670,8 @@ require 'connect.php';
                         
 
                         var image = `${"imageSlip/"+value.img_slip}`;
-                        
+                       
+
                         if (image != "imageSlip/") {
 
                         var drEvent = $('#imageSlip').dropify({
@@ -641,7 +699,7 @@ require 'connect.php';
                         // $(".dropify-clear").click();
                         }
                     //------------------------------------------------------------
-                    var image2 = `${"imageSlip/"+value.img_slip2}`;
+                     var image2 = `${"imageSlip/"+value.img_slip2}`;
                         
                         if (image2 != "imageSlip/") {
 
@@ -670,23 +728,53 @@ require 'connect.php';
                         // $(".dropify-clear").click();
                         }
 
-             
-                    //---------------------------------------------------
-
-                        var image2 = `${"imageSlip/"+value.img_tax}`;
+                    //------------------------------------------------------------
+                     var image3 = `${"imageSlip/"+value.img_slip3}`;
                         
-                        if (image2 != "imageSlip/") {
+                        if (image3 != "imageSlip/") {
 
-                        var drEvent = $('#imageTax').dropify({
-                            defaultFile: image2
+                        var drEvent = $('#imageSlip3').dropify({
+                            defaultFile: image3
                         });
                         drEvent = drEvent.data('dropify');
                         drEvent.resetPreview();
                         drEvent.clearElement();
-                        drEvent.settings.defaultFile = image2;
+                        drEvent.settings.defaultFile = image3;
                         drEvent.destroy();
                         drEvent.init();
-                        document.getElementById("imageTax").src = image2;
+                        document.getElementById("imageSlip3").src = image3;
+
+                        } else {
+
+                        var drEvent = $('#imageSlip3').dropify({
+                            defaultFile: null
+                            });
+                            drEvent = drEvent.data('dropify');
+                            drEvent.resetPreview();
+                            drEvent.clearElement();
+                            drEvent.settings.defaultFile = null;
+                            drEvent.destroy();
+                            drEvent.init();
+                        // $(".dropify-clear").click();
+                        }
+
+             
+                    //---------------------------------------------------
+
+                        var imagetax = `${"imageSlip/"+value.img_tax}`;
+                        
+                        if (imagetax != "imageSlip/") {
+
+                        var drEvent = $('#imageTax').dropify({
+                            defaultFile: imagetax
+                        });
+                        drEvent = drEvent.data('dropify');
+                        drEvent.resetPreview();
+                        drEvent.clearElement();
+                        drEvent.settings.defaultFile = imagetax;
+                        drEvent.destroy();
+                        drEvent.init();
+                        document.getElementById("imageTax").src = imagetax;
 
                         } else {
 
@@ -702,10 +790,23 @@ require 'connect.php';
                         // $(".dropify-clear").click();
                         }
                 //--------------------------------------------------------------------------------
+                    setTimeout(() => {
+                    $('#imageSlip').data("value", value.img_slip);
+                    $('#imageSlip2').data("value", value.img_slip2);
+                    $('#imageSlip3').data("value", value.img_slip3);   
+                    $('#imageTax').data("value", value.img_tax);   
+                    }, 300);
+
+                    // setTimeout(() => {
+                    //     alert($('#imageTax').data("value"));
+                    // }, 500);
+
+                    
+
                         var IsStatus = value.IsStatus;
                         var IsStatusTax = value.IsStatusTax;
                     
-                 
+                     
 
                         setTimeout(function() {
                             if(IsStatus=='2'){
@@ -718,6 +819,7 @@ require 'connect.php';
                             document.getElementById("Radiopay3").disabled = true;
                             document.getElementById("imageSlip").disabled = true;
                             document.getElementById("imageSlip2").disabled = true;
+                            document.getElementById("imageSlip3").disabled = true;
                             document.getElementById("Text_total_check").disabled = true;
                         }
 
@@ -803,53 +905,79 @@ require 'connect.php';
     var DocArray = {};
     DocArray.DocNO = [];
     DocArray.amount = [];
+    DocArray.Doc_amount = [];
 
     function add_Doc(row) {
         var iArray = [];
-        DocArray.DocNO = [];
-        DocArray.amount = [];
+        // DocArray.DocNO = [];
+        // DocArray.amount = [];
         var i = 0;
 
         var DocNO = "";
+        var Doc_amount = "";
         var amount = 0;
         var sumtotal = 0 ;
-     
 
-        $("#checkDoc:checked").each(function() {
-          iArray.push($(this).val());
-          // console.log( iArray.push($(this).val()));
-        }); 
+                
+                DocNO = $("#DocNo_" + row).val();
+                amount = $("#amountID_" + row).val();
+                amount = parseFloat(amount);
+                Doc_amount = DocNO+"_"+amount;
+
+
+                DocArray.DocNO.push(DocNO);  
+                DocArray.Doc_amount.push(Doc_amount);
         
 
-        for (var j = 0; j < iArray.length; j++) {
-            
-            DocNO = $("#DocNo_" + iArray[j]).val();
-            amount = $("#amountID_" + iArray[j]).val();
-            amount = parseFloat(amount);
-            sumtotal += amount;
-       
-          if($.inArray(DocNO, DocArray.DocNO) != -1){
-            var key = $.inArray(DocNO, DocArray.DocNO);
-            // DocArray.Qty[key] = Qty;
-          }else{
-            DocArray.DocNO.push(DocNO);
-            DocArray.amount.push(amount);
-          }
+            var findDuplicates = arr => arr.filter((item, index) => arr.indexOf(item) != index)
+            var IDDocNO_chk = findDuplicates(DocArray.DocNO);
+            DocArray.DocNO =  Array.from(new Set(DocArray.DocNO)); 
+            DocArray.Doc_amount =  Array.from(new Set(DocArray.Doc_amount)); 
          
-        //   console.log(DocArray.DocNO);
-        }
+            $.each(DocArray.DocNO, function(key, value) {
+                  if(value==IDDocNO_chk){
+                    DocArray.DocNO.splice(key, 1);
+                    DocArray.Doc_amount.splice(key, 1);
+                  }                     
+                 
+            });
+
+            DocArray.amount = [];
+            $.each(DocArray.Doc_amount, function(key1, value1) {
+           
+                var myArray =  value1.split("_");
+              
+                DocArray.amount.push(myArray[1]);
+            });
+
+            // console.log(DocArray.DocNO);
+            // console.log(DocArray.Doc_amount);
+            // console.log(DocArray.amount);
+
+           
+
+            $.each(DocArray.amount, function(keyamount, valueamount) {
+                valueamount = parseFloat(valueamount);
+                sumtotal += valueamount;
+            });
+        
+ 
+        var tax = 0;
         var sumtotal_tax = 0;
-        sumtotal_tax = sumtotal/1.07;;
-        // sumtotal_tax = sumtotal_tax.toFixed(2);
-        // sumtotal_tax =  Math.round(sumtotal_tax);
+        tax = (sumtotal/1.07) *1/100;
+
+        sumtotal_tax = sumtotal - tax;
+
        
         var Text_sumtotal = sumtotal.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
         var sumtotal_tax = sumtotal_tax.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
         $("#text_sum").val(Text_sumtotal);
         $("#Text_total").val(Text_sumtotal);
         $("#text_sum_tax").val(sumtotal_tax);
+        $("#tax").val(tax);
+
         chk_typeSum();
-        // alert(sumtotal);
+      
     }
     
     function SaveEdit() {
@@ -860,11 +988,14 @@ require 'connect.php';
         var DocNoP =   '<?= $DocNoP ?>';
         var Radio_Sum= document.querySelector('input[name="Radio_Sum"]:checked').value;
         var Radiopay= document.querySelector('input[name="Radiopay"]:checked').value;
+      
         
         var imageSlip = $('#imageSlip').prop('files')[0];
         var data_imageSlip = $('#imageSlip').data('value');
         var imageSlip2 = $('#imageSlip2').prop('files')[0];
         var data_imageSlip2 = $('#imageSlip2').data('value');
+        var imageSlip3 = $('#imageSlip3').prop('files')[0];
+        var data_imageSlip3 = $('#imageSlip3').data('value');
 
         var Select_Bank= $("#Select_Bank").val();
         var Text_branch= $("#Text_branch").val();
@@ -879,23 +1010,58 @@ require 'connect.php';
         var Text_number= $("#Text_number").val();
         var Text_total_check= $("#Text_total_check").val();
         var text_sum_tax = $("#text_sum_tax").val();
-      
+
         if (imageSlip == undefined) {
-            var text_imageSlip= $("#text_imageSlip").val();
-            var text_imageSlip2= $("#text_imageSlip2").val();
+            if(data_imageSlip=='default'){
+                var text_imageSlip= "";
+            }else{
+                var text_imageSlip= $("#text_imageSlip").val();
+            }
             var text_imageTax= $("#text_imageTax").val();
         }else{
-
-            if (imageTax == undefined) {
-                var text_imageTax= $("#text_imageTax").val();
-            }else{
-                var text_imageTax= "";
-            }
-
             var text_imageSlip= "";
+        } 
+
+
+        if(imageSlip2 == undefined){ 
+            if(data_imageSlip2=='default'){
+                var text_imageSlip2= "";
+            }else{
+                var text_imageSlip2= $("#text_imageSlip2").val();
+            }
+            var text_imageTax= $("#text_imageTax").val();
+        }else{
             var text_imageSlip2= "";
-            
+        } 
+        
+        if(imageSlip3 == undefined){
+            if(data_imageSlip3=='default'){
+                var text_imageSlip3= "";
+            }else{
+                var text_imageSlip3= $("#text_imageSlip3").val();
+            }
+            var text_imageTax= $("#text_imageTax").val();
+        }else{
+            var text_imageSlip3= "";
         }
+
+        // alert(data_imageTax);
+        // return;
+        if (imageTax == undefined) {
+            if(data_imageTax=='default'){
+                var text_imageTax= "";
+            }else{
+                var text_imageTax= $("#text_imageTax").val();
+            }
+                
+        }else{
+            var text_imageTax= "";
+        }
+
+
+        
+
+          
 
        if(Radiopay==1){
 
@@ -924,9 +1090,11 @@ require 'connect.php';
             return;
             }
 
-            if (Text_branch == "") {
+
+
+            if (Text_number == "") {
                 swal({
-                    title: "กรุณากรอกสาขาธนาคาร",
+                    title: "กรุณากรอกเลขที่เช็ค",
                     text: "",
                     type: "info",
                     showConfirmButton: false,
@@ -966,6 +1134,8 @@ require 'connect.php';
         form_data.append('data_imageSlip', data_imageSlip);
         form_data.append('imageSlip2', imageSlip2);
         form_data.append('data_imageSlip2', data_imageSlip2);
+        form_data.append('imageSlip3', imageSlip3);
+        form_data.append('data_imageSlip3', data_imageSlip3);
 
         form_data.append('Select_Bank', Select_Bank);
         form_data.append('Text_branch', Text_branch);
@@ -981,6 +1151,7 @@ require 'connect.php';
         form_data.append('Area', Area);
         form_data.append('text_imageSlip', text_imageSlip);
         form_data.append('text_imageSlip2', text_imageSlip2);
+        form_data.append('text_imageSlip3', text_imageSlip3);
         form_data.append('text_imageTax', text_imageTax);
         form_data.append('Text_number', Text_number);
         form_data.append('Text_total_check', Text_total_check);
@@ -1037,6 +1208,9 @@ require 'connect.php';
         var imageSlip2 = $('#imageSlip2').prop('files')[0];
         var data_imageSlip2 = $('#imageSlip2').data('value');
 
+        var imageSlip3 = $('#imageSlip3').prop('files')[0];
+        var data_imageSlip3 = $('#imageSlip3').data('value');
+
         var Select_Bank= $("#Select_Bank").val();
         var Text_branch= $("#Text_branch").val();
         var txt_dateBank= $("#txt_dateBank").val();
@@ -1051,8 +1225,8 @@ require 'connect.php';
         var Text_total_check= $("#Text_total_check").val();
         var text_sum_tax = $("#text_sum_tax").val();
     
-    
-        if (imageSlip == undefined) {
+        
+        if (imageSlip == undefined && imageSlip2 == undefined && imageSlip3 == undefined) {
             swal({
                 title: "กรุณา อัพโหลด รูป Slip",
                 text: "",
@@ -1090,9 +1264,11 @@ require 'connect.php';
             return;
             }
 
-            if (Text_branch == "") {
+           
+
+            if (Text_number == "") {
                 swal({
-                    title: "กรุณากรอกสาขาธนาคาร",
+                    title: "กรุณากรอกเลขที่เช็ค",
                     text: "",
                     type: "info",
                     showConfirmButton: false,
@@ -1133,6 +1309,8 @@ require 'connect.php';
         form_data.append('data_imageSlip', data_imageSlip);
         form_data.append('imageSlip2', imageSlip2);
         form_data.append('data_imageSlip2', data_imageSlip2);
+        form_data.append('imageSlip3', imageSlip3);
+        form_data.append('data_imageSlip3', data_imageSlip3);
 
         form_data.append('Select_Bank', Select_Bank);
         form_data.append('Text_branch', Text_branch);
@@ -1150,7 +1328,7 @@ require 'connect.php';
         form_data.append('Text_total_check', Text_total_check);
         form_data.append('text_sum_tax', text_sum_tax);
         form_data.append('Radio_Sum', Radio_Sum);
-        
+        swal.showLoading();
         $.ajax({
             url: "process/saveDoc_cusSale.php",
             type: 'POST',
@@ -1161,7 +1339,7 @@ require 'connect.php';
             data: form_data,
             success: function(result) {
             //  var ObjData = JSON.parse(result);
-
+            
                 addDetail(result);
                 // alert(result);
             }
@@ -1189,6 +1367,7 @@ require 'connect.php';
                 'Cus_Code': Cus_Code
             },
             success: function(result) {
+                swal.close();
             swal({
                     title:'Success',
                     text: 'บันทึกข้อมูลสำเร็จ',
@@ -1244,10 +1423,27 @@ require 'connect.php';
                 if (temp["status"] == 'success') {
                     if (temp["form"] == 'SearchDataSaleDoc') {
                         var StrTR = "";
+                       
+                        var chkDoc ="";
+                        // var checked = "";
                         if(temp["rCnt"]!=0){
                             for (var i = 0; i < temp["rCnt"]; i++) {
-                            var chkDoc = "<input style='margin-top:5px;' type='checkbox' name='checkDoc' id='checkDoc' value='" + i + "' onclick='add_Doc(" + i + ")' ><input type='hidden' id='amountID_" + i + "' value='" + temp[i]['Total_int'] + "'><input type='hidden' id='DocNo_" + i + "' value='" + temp[i]['DocNoAcc'] + "'>";
-                            StrTR +=    "<tr style='border-radius: 15px 15px 15px 15px;margin-top: 6px;margin-bottom: 6px;font-size: 15px;'>" +
+                                var chkcount = 0 ;
+                                $.each(DocArray.DocNO, function(key, value) {
+                                    if(value == temp[i]["DocNoAcc"]){
+                                        chkcount++;
+                                    }                  
+                                    // alert(value+"|"+IDdep_chk+"|"+key);
+                                });
+
+                                if(chkcount==0){
+                                    var  checked = ""
+                                }else{
+                                    var  checked = "checked"
+                                }
+
+                                chkDoc = "<input "+checked+" style='margin-top:5px;' type='checkbox' name='checkDoc' id='checkDoc' value='" + i + "' onclick='add_Doc(" + i + ")' ><input type='hidden' id='amountID_" + i + "' value='" + temp[i]['Total_int'] + "'><input type='hidden' id='DocNo_" + i + "' value='" + temp[i]['DocNoAcc'] + "'>";
+                                StrTR +=    "<tr style='border-radius: 15px 15px 15px 15px;margin-top: 6px;margin-bottom: 6px;font-size: 15px;'>" +
                                         "<td style='width:2%;text-align: center;'>" + chkDoc + "</td>" +
                                         "<td style='width:10%;text-align: center;'>" + temp[i]["DocDate"] + "</td>" +
                                         "<td style='width:10%;text-align: center;'>" + temp[i]["DocNoAcc"] + "</td>" +
@@ -1309,6 +1505,7 @@ require 'connect.php';
                         setTimeout(function() {
                             SearchDataSalecDocEdit();
                             update_QtyDoc();
+                            showDateDetail();
                         }, 300);
                     } else if(temp["form"] == 'showDateDetail'){
 
@@ -1320,12 +1517,13 @@ require 'connect.php';
                         $('#Text_totaltax').val(temp[0]['Sumtotal_Tax']);
       
                         var Ispay = temp[0]['Ispay'];
+                        alert(Ispay);
                         if(Ispay=='1'){
                             document.getElementById("Radiopay1").checked = true;
                         }else if(Ispay=='2'){
                             document.getElementById("Radiopay2").checked = true;
                         }else{
-                            document.getElementById("Radiopay2").checked = true;
+                            document.getElementById("Radiopay3").checked = true;
                         }
                         
                         var TaxType = temp[0]['TaxType'];
@@ -1461,9 +1659,17 @@ require 'connect.php';
                         }
 
                         $('#text_sum').val(temp["Sumtotal"]);
-                        $('#text_sum_tax').val(temp[0]["TaxPay"]);
+                        $('#text_sum_tax').val(temp["Sumtotal_tax"]);
                         $('#Table_DocSale tbody').html(StrTR);             
-                  
+                        chkRadio_Tax();
+                        chk_typeSum();
+
+                        setTimeout(function() {
+                            update_TxtSum();
+                        }, 300);
+
+                       
+                       
                     } 
                 } else {
                     swal({
